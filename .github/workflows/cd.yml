@@ -1,0 +1,20 @@
+name: CD Pipeline
+
+on:
+  workflow_run:
+    workflows: ["Docker Image CI"]
+    types:
+      - completed
+
+jobs:
+  build:
+    runs-on: self-hosted
+    steps:
+      - name: delete old laravel containers
+        run: docker rm -f laravel || true
+      - name: run containers
+        run: docker-compose up -d
+      - name: install aplication depency
+        run: docker-compose exec app composer install
+      - name: create unique application key
+        run: docker-compose exec app php artisan key:generate
