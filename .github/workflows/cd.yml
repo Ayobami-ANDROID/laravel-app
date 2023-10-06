@@ -11,10 +11,10 @@ jobs:
     runs-on: self-hosted
     steps:
       - name: delete old laravel containers
-        run: docker rm -f laravel || true
+        run: sudo docker rm -f laravel || true
       - name: run containers
-        run: docker-compose up -d
+        run: sudo docker-compose up -d
       - name: install aplication depency
-        run: docker-compose exec app composer install
+        run: sudo docker-compose exec app composer install
       - name: create unique application key
-        run: docker-compose exec app php artisan key:generate
+        run: sudo docker-compose exec app php artisan key:generate
