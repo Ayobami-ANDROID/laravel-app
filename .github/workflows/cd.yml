@@ -29,9 +29,9 @@ jobs:
         run: |
           cd laravel-app
       - name: Build app image
-        run: docker compose build app
+        run: docker compose -f  docker-compose.yml build app
       - name : create containers
-        run: docker compose up -d
+        run: docker-compose -f docker-compose.yml up -d
       - name: install composer
         run: docker-compose exec app composer install
       - name: generate unique key
