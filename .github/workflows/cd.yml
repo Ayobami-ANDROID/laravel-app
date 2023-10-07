@@ -9,37 +9,9 @@ on:
 jobs:
   build:
     runs-on: self-hosted
-    steps:    
-      - name: Check if Repository Exists
-        id: check-repo
-        run: |
-          if [ -d "laravel-app" ]; then
-            echo "Repository already exists. Deleting..."
-            rm -rf laravel-app 
-            echo "Repository deleted."
-          fi
-
-      - name: Clone Repository
-        if: steps.check-repo.outcome == 'success'
-        run: |
-          git clone https://github.com/Ayobami-ANDROID/laravel-app.git
-
-      - name: Unzip New Repository (if cloned)
-        if: steps.check-repo.outcome == 'success'
-        run: |
-          cd laravel-app
-      - name: ls 
-        run : ls
-      - name: enter file
-        run: cd laravel-app
-      - name: ls2 
-        run : ls
-      - name: Build app image
-        run: docker compose -f  docker-compose.yml build app
-      - name : create containers
-        run: docker-compose -f docker-compose.yml up -d
-      - name: install composer
-        run: docker-compose exec app composer install
-      - name: generate unique key
-        run: docker-compose exec app php artisan key:generate
-        
+    steps:
+      - name: delete old laravel containers
+        run: sudo docker rm -f laravel || true
+      - name: delete old ngnix
+        run: sudo docker rm -f ngnixlaravel || true
+      - name: sudo docker-compose up -d
