@@ -33,6 +33,4 @@ WORKDIR /var/www
 
 USER $user
 
-#stage 2 
-FROM nginx:alpine
 

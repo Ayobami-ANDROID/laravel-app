@@ -15,4 +15,5 @@ jobs:
       - name: delete old ngnix
         run: sudo docker rm -f ngnixlaravel || true
       - name: compose
-        run: docker compose -f docker-compose.yml up -d
+        run: docker run -d  --name ngnixlaravel  --restart unless-stopped -p 8000:80 -v $(pwd):/var/www -v $(pwd)/docker-compose/nginx:/etc/nginx/conf.d/ --network travellist nginx:alpine
+
