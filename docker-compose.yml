@@ -18,7 +18,7 @@ services:
   
   nginx:
     image: nginx:alpine
-    container_name: travellist-nginx
+    container_name: aydev123/laravel
     restart: unless-stopped
     ports:
       - 8000:80

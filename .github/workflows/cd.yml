@@ -9,12 +9,29 @@ on:
 jobs:
   build:
     runs-on: self-hosted
-    steps:
-      - name: delete old laravel containers
-        run: sudo docker rm -f laravel || true
-      - name: run containers
-        run: sudo docker compose up -d
-      - name: install aplication depency
-        run: sudo docker compose exec app composer install
-      - name: create unique application key
-        run: sudo docker compose exec app php artisan key:generate
+    steps:    
+      - name: Check if Repository Exists
+        id: check-repo
+        run: |
+          if [ -d "laravel-app" ]; then
+            echo "Repository already exists. Deleting..."
+            rm -rf your-repo-directory
+            echo "Repository deleted."
+          fi
+
+      - name: Clone Repository
+        if: steps.check-repo.outcome == 'success'
+        run: |
+          git clone https://github.com/Ayobami-ANDROID/laravel-app.git
+
+      - name: Unzip New Repository (if cloned)
+        if: steps.check-repo.outcome == 'success'
+        run: |
+          cd laravel-app
+      - name : create containers
+        run: docker compose up -d
+      - name: install composer
+        run: docker-compose exec app composer install
+      - name: generate unique key
+        run: docker-compose exec app php artisan key:generate
+        
