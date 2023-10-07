@@ -15,7 +15,7 @@ jobs:
         run: |
           if [ -d "laravel-app" ]; then
             echo "Repository already exists. Deleting..."
-            rm -rf your-repo-directory
+            rm -rf laravel-app 
             echo "Repository deleted."
           fi
 
