@@ -15,4 +15,4 @@ jobs:
       - name: delete old ngnix
         run: sudo docker rm -f ngnixlaravel || true
       - name: compose
-        run: sudo docker compose up -d
+        run: docker compose -f docker-compose.yml up -d
