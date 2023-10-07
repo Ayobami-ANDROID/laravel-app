@@ -38,6 +38,6 @@ jobs:
         username: ${{ secrets.USERNAME }}
         key: ${{ secrets.EC2_SSH_KEY }}
         script: |
-          docker-compose up -d
-          docker-compose exec app composer install
-          docker-compose exec app php artisan key:generate
+          docker compose up -d
+          docker compose exec app composer install
+          docker compose exec app php artisan key:generate
