@@ -15,7 +15,7 @@ jobs:
       - name: delete old ngnix
         run: sudo docker rm -f ngnixlaravel || true
       - name: create network
-        run: docker network create -d bridge travellist
+        run: sudo docker network create -d bridge travellist
       - name: run containers
         run: sudo docker run -d --name app-name --network=travellist aydev123/laravel
       - name: compose
