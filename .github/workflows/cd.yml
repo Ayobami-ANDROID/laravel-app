@@ -14,6 +14,14 @@ jobs:
         run: sudo docker rm -f laravel || true
       - name: delete old ngnix
         run: sudo docker rm -f ngnixlaravel || true
+      - name: create network
+        run: docker network create -d bridge travellist
+      - name: run containers
+        run: sudo docker run -d --name app-name --network=travellist aydev123/laravel
       - name: compose
         run: sudo docker run -d  --name ngnixlaravel  --restart unless-stopped -p 8000:80 -v $(pwd):/var/www -v $(pwd)/docker-compose/nginx:/etc/nginx/conf.d/ --network travellist nginx:alpine
+      - name: install aplication depency
+        run: sudo docker compose exec app composer install
+      - name: create unique application key
+        run: sudo docker compose exec app php artisan key:generate
 
